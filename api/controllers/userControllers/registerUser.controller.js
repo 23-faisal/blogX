@@ -4,22 +4,23 @@ import bcrypt from "bcryptjs";
 export const registerUserController = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const existingUserName = await User.findOne({ username });
-    if (existingUserName) {
-      res.status(404).json({
-        success: false,
-        message: "Username already existed!",
-      });
-    }
     const existingEmail = await User.findOne({ email });
-    if (existingUserName) {
+    if (existingEmail) {
       res.status(404).json({
         success: false,
         message: "Email already existed!",
       });
     }
 
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      res.status(404).json({
+        success: false,
+        message: "Username already existed!",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username: username,
       email: email,
@@ -35,7 +36,7 @@ export const registerUserController = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       success: false,
-      Error: err,
+      Error: err.message,
     });
   }
 };

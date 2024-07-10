@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/login/", {
+      const response = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
@@ -26,12 +26,10 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      if (response.ok) {
-        alert("Login successful");
-        navigate("/");
-      } else {
-        alert("Login failed!!! Try again");
-      }
+      const user = await response.json();
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("username", user.username);
+      navigate("/");
     } catch (error) {
       alert(`Login failes: ${error}`);
     }

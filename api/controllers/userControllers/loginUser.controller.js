@@ -32,6 +32,7 @@ export const loginUserController = async (req, res) => {
       success: true,
       message: "User logged in successfully",
       token: token,
+      username: userExisted.username,
     });
   } catch (err) {
     res.status(404).json({

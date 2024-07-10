@@ -2,14 +2,18 @@ import { Router } from "express";
 
 import { registerUserController } from "../controllers/userControllers/registerUser.controller.js";
 import { loginUserController } from "../controllers/userControllers/loginUser.controller.js";
+import {
+  loginValidation,
+  registerValidation,
+} from "../config/uservalidation.js";
 
 export const userRouter = Router();
 
 // Register User
-userRouter.post("/register", registerUserController);
+userRouter.post("/register", registerValidation, registerUserController);
 
 // Login User
-userRouter.post("/login", loginUserController);
+userRouter.post("/login", loginValidation, loginUserController);
 
 // profile
 

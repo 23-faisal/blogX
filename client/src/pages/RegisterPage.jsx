@@ -19,22 +19,19 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/register/", {
+      const response = await fetch("http://localhost:4000/auth/register", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Bad Request!");
       }
-      if (response.status === 201) {
-        alert("Registration successful");
-        navigate("/");
-      } else {
-        alert("Registration failed!!!");
-      }
+      const user = await response.json();
+
+      navigate("/login");
     } catch (error) {
-      alert("Registration failed");
+      console.log(error);
     }
   };
 

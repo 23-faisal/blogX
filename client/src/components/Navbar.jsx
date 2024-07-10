@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  
+  const navigate = useNavigate();
+
   return (
     <div className="w-full bg-slate-100">
       <nav className="max-w-6xl mx-auto flex items-center justify-between py-5">
